@@ -1,5 +1,6 @@
 import fs = require('fs')
 import path = require('path')
+import url = require('url')
 import utils = require('./utils')
 const params = require('./params') as {
   "LOCATION_RECORD_SIZE": number,
@@ -9,7 +10,10 @@ const params = require('./params') as {
 var cacheEnabled = false;
 const ipCache:{[filename:string]:ipBlockRecord[]|indexFile} = {}
 var locationCache:Promise<locationRecord[]>;
-const DATA_DIR = path.join(path.dirname(__dirname), "data");
+const DATA_DIR = path.join(
+  path.dirname(url.fileURLToPath(import.meta.url)),
+  'data'
+)
 
 function enableCache(){
   if(!cacheEnabled){
