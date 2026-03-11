@@ -18,7 +18,7 @@ def removeOldData():
         pass
 
 def jsonify(item):
-    return json.dumps(item).encode('utf-8')
+    return json.dumps(item, separators=(',', ':')).encode('utf-8')
 
 def storeFile(filename, content, binary = False):
     if binary:
@@ -113,9 +113,9 @@ def generateIndexes(ipIndex):
     MID_NODES = int(ceil(len(ipIndex)/ROOT_NODES))
     for i in range(ROOT_NODES):
         rootIpIndex.append(ipIndex[i*MID_NODES])
-        storeFile("i%d.json" % i, json.dumps(ipIndex[i*MID_NODES:(i+1)*MID_NODES]))
+        storeFile("i%d.json" % i, json.dumps(ipIndex[i*MID_NODES:(i+1)*MID_NODES], separators=(',', ':')))
 
-    storeFile("index.json", json.dumps(rootIpIndex))
+    storeFile("index.json", json.dumps(rootIpIndex, separators=(',', ':')))
     return MID_NODES
 
 def storeDynamicParams(location_record_length, num_mid_nodes):
