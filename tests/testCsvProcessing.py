@@ -47,7 +47,7 @@ def createBlocksFile():
 207.97.192.0/18,6252001,6252001,,0,0,,37.7510,-97.8220,1000
 23.161.144.0/20,,6252001,,0,0,,,,
 80.231.5.0/24,,,,0,1,,,,
-""" + "208.69.72.0/21,,6252001,,0,0,,,,\n"*2000,
+""" + "208.69.72.0/21,,6252001,,0,0,,,,\n"*3000,
     "GeoLite2-City-Blocks-IPv4.csv",
     "raw")
 
@@ -91,6 +91,7 @@ class TestDataGenerator(unittest.TestCase):
         firstIp = geoip.ipStr2Int("207.97.192.0")
         secondBlockIp = geoip.ipStr2Int("208.69.72.0")
         self.assertListEqual(ipIndex, [firstIp, secondBlockIp])
+        self.assertGreaterEqual(len(ipIndex), 2, "Data should be split into at least 2 files")
         for i in range(len(ipIndex)):
             self.assertEqual(readFile("%d.json" % i, "data")[0][0], ipIndex[i])
         firstBlock = readFile("0.json", "data")
